@@ -5,9 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.bmpl.ims.common.ConnectionUtils;
+import org.bmpl.ims.common.MailSender;
 import org.bmpl.ims.common.Queries;
-import org.bmpl.ims.users.Dashboard;
 import org.bmpl.ims.users.dto.UserDTO;
 
 public class UserDAO {
@@ -34,7 +37,7 @@ public class UserDAO {
 			
 			if(result.next()) {
 				dto.setUserid(result.getString("userid"));
-				
+				dto.setLoginSuccess(true);
 			}
 			
 		}
@@ -58,7 +61,7 @@ public class UserDAO {
 	
 	
 	public boolean register(UserDTO dto) 
-			throws ClassNotFoundException, SQLException {
+			throws ClassNotFoundException, SQLException, AddressException, MessagingException {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -77,6 +80,7 @@ public class UserDAO {
 			int result = pstmt.executeUpdate();
 			
 			if(result >0) {
+				MailSender.sendMail(dto.getUserid());
 				return true;
 			}
 			

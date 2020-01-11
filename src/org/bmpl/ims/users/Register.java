@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -54,6 +56,12 @@ public class Register extends JFrame {
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -70,8 +78,9 @@ public class Register extends JFrame {
 	}
 	
 	public Register() {
+		setTitle("REGISTER");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 650, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -93,10 +102,6 @@ public class Register extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(168, 139, 130, 26);
 		contentPane.add(passwordField);
-		
-		JLabel lblRegister = new JLabel("Register");
-		lblRegister.setBounds(113, 19, 61, 16);
-		contentPane.add(lblRegister);
 		
 		JButton btnSubmit = new JButton("submit");
 		btnSubmit.setBounds(57, 202, 117, 29);

@@ -20,6 +20,7 @@ public class Application extends JFrame {
 	
 	void loadLogin(){
 		this.setVisible(false);
+		this.dispose();
 		Login login  = new Login();
 		login.setVisible(true);
 	}
@@ -27,6 +28,7 @@ public class Application extends JFrame {
 	void loadRegister() {
 		
 		this.setVisible(false);
+		this.dispose();
 		Register register = new Register();
 		register.setVisible(true);
 		
@@ -51,12 +53,12 @@ public class Application extends JFrame {
 	 * Create the frame.
 	 */
 	public Application() {
+		setTitle("APPLICATION");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 650, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		JButton btnLogin = new JButton("LOGIN");
 		btnLogin.setBounds(25, 45, 117, 29);
@@ -69,6 +71,7 @@ public class Application extends JFrame {
 				
 			}
 		});
+		contentPane.setLayout(null);
 		contentPane.add(btnLogin);
 		
 		JButton btnRegister = new JButton("REGISTER");

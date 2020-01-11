@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.bmpl.ims.start.Application;
 import org.bmpl.ims.users.dao.UserDAO;
 import org.bmpl.ims.users.dto.UserDTO;
 
@@ -35,10 +36,12 @@ public class Login extends JFrame {
 		UserDAO userDAO = new UserDAO();
 		try {
 			
-			UserDTO obj = userDAO.login(userDTO);
-			if(obj.getUserid() == userDTO.getUserid()) {
+			userDTO = userDAO.login(userDTO);
+			
+			if(userDTO.isLoginSuccess()) {
+				
 				this.setVisible(false);
-				Dashboard frame = new Dashboard();
+				Dashboard frame = new Dashboard(userDTO);
 				frame.setVisible(true);
 			}
 			
@@ -54,6 +57,13 @@ public class Login extends JFrame {
 		
 	}
 	
+	void loadApplication() {
+		this.setVisible(false);
+		this.dispose();
+		Application application  = new Application();
+		application.setVisible(true);
+	}
+	
 	void doReset() {
 		textField.setText("");
 		passwordField.setText("");
@@ -61,8 +71,9 @@ public class Login extends JFrame {
 
 	
 	public Login() {
+		setTitle("LOGIN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 650, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -84,10 +95,6 @@ public class Login extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(177, 115, 130, 26);
 		contentPane.add(passwordField);
-		
-		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setBounds(109, 6, 61, 16);
-		contentPane.add(lblLogin);
 		
 		JButton btnSubmit = new JButton("submit");
 		btnSubmit.setBounds(64, 167, 117, 29);
@@ -114,5 +121,14 @@ public class Login extends JFrame {
 			}
 		});
 		contentPane.add(btnReset);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loadApplication();
+			}
+		});
+		btnBack.setBounds(310, 17, 117, 29);
+		contentPane.add(btnBack);
 	}
 }
